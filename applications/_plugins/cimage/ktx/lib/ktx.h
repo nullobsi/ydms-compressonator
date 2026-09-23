@@ -160,12 +160,13 @@ These files are part of the SDL2 source distributed by the [SDL project]
     #endif
     #if KTX_USE_GETPROC
       #include <GL/glew.h>
+      #define GL_APIENTRY GLAPIENTRY
     #else
       #define GL_GLEXT_PROTOTYPES
       #include <GL/glcorearb.h>
+      #define GL_APIENTRY APIENTRY
     #endif
 
-    #define GL_APIENTRY APIENTRY
     #define KTX_GLFUNCPTRS "gl_funcptrs.h"
 
 #elif KTX_OPENGL_ES1

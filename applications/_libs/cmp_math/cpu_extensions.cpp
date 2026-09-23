@@ -63,7 +63,7 @@ CPUExtensions GetCPUExtensions()
 
     int cpuInfo[4];
 
-#ifndef __linux__
+#ifdef _WIN32
 
     GetCPUID(cpuInfo, 0);
 

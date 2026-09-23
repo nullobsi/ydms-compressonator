@@ -23,7 +23,6 @@ list(APPEND PLUGIN_COMMON_SRC
     modeldata.cpp
     pluginmanager.cpp
     cpu_timing.cpp
-    ssim.cpp
     tc_plugininternal.cpp
     textureio.cpp
     userinterface.cpp
@@ -54,6 +53,10 @@ list(APPEND PLUGIN_COMMON_H
     utilfuncs.h
     vectypes.h
 )
+
+if (OPTION_CMP_OPENCV)
+    list(APPEND PLUGIN_COMMON_SRC ssim.cpp)
+endif()
 
 if (OPTION_BUILD_EXR)
     list(APPEND PLUGIN_COMMON_SRC cexr.cpp)
@@ -88,6 +91,11 @@ target_include_directories(CMP_Common PRIVATE
   ${OpenCV_INCLUDE_DIRS}
   ${OpenEXR_INCLUDE_DIRS}
 )
+
+if (UNIX)
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(CMP_Common glm::glm)
+endif()
 
 if (OPTION_CMP_QT)
     target_link_libraries(CMP_Common Qt5::Widgets)

@@ -96,6 +96,11 @@ CMP_STATIC CGU_FLOAT (*cpu_bc1ComputeBestEndpoints)(CGU_FLOAT*, CGU_FLOAT*, CGU_
 // NOTE: The requested extension will only be enabled if it is supported by the current CPU.
 CMP_STATIC bool bc1ToggleSIMD(CGU_INT newExtension)
 {
+#if defined(__aarch64__) || defined(_M_ARM64)
+    cpu_bc1ComputeBestEndpoints = _cpu_bc1ComputeBestEndpoints;
+    g_bc1FunctionPointersSet = true;
+    return newExtension == EXTENSION_NONE || newExtension == EXTENSION_COUNT;
+#else
     CGU_BOOL useAVX512 = true;
     CGU_BOOL useAVX2   = true;
     CGU_BOOL useSSE42  = true;
@@ -135,6 +140,7 @@ CMP_STATIC bool bc1ToggleSIMD(CGU_INT newExtension)
         result = false;
 
     return result;
+#endif
 }
 #endif
 

@@ -52,9 +52,9 @@ if (UNIX)
     find_package(OpenGL) 
     if (OpenGL_FOUND)
         if(APPLE)
-            target_include_directories(Image_KTX
-                                       PRIVATE
-                                       /usr/local/include)
+            find_package(GLEW REQUIRED)
+            target_compile_definitions(Image_KTX PRIVATE KTX_USE_GETPROC=1)
+            target_link_libraries(Image_KTX PRIVATE GLEW::GLEW OpenGL::GL)
         endif()
     endif()
 endif()
